@@ -28,7 +28,7 @@ app.get('/contact', (req, res) => {
 });
 
 // Serve the signin.html file
-app.get('/signin', (req, res) => {
+app.get('/photos', (req, res) => {
   res.sendFile(path.join(__dirname, 'photos.html'));
 });
 
