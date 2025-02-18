@@ -4,32 +4,30 @@ const path = require('path');
 const app = express();
 const PORT = 3000;
 
-// Serve static files from the "public" directory
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public'));
 
-// Serve the index.html file
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // Serve the about.html file
 app.get('/bio', (req, res) => {
-  res.sendFile(path.join(__dirname, 'bio.html'));
+  res.sendFile(path.join(__dirname, 'public', 'bio.html'));
 });
 
 // Serve the portfolio.html file
 app.get('/blog', (req, res) => {
-  res.sendFile(path.join(__dirname, 'blog.html'));
+  res.sendFile(path.join(__dirname, 'public', 'blog.html'));
 });
 
 // Serve the contact.html file
 app.get('/contact', (req, res) => {
-  res.sendFile(path.join(__dirname, 'contact.html'));
+  res.sendFile(path.join(__dirname, 'public', 'contact.html'));
 });
 
 // Serve the signin.html file
 app.get('/photos', (req, res) => {
-  res.sendFile(path.join(__dirname, 'photos.html'));
+  res.sendFile(path.join(__dirname, 'public', 'photos.html'));
 });
 
 app.listen(PORT, () => {
