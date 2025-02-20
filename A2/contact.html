@@ -3,21 +3,64 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <title>GallerME</title>
+  <style>
+    html, body {
+      height: 100%;
+    }
+    .nav-link {
+      color: white !important;
+    }
+    .nav-link.home {
+      color: #FFA500 !important; /* Orangish color */
+    }
+    .social-icons a {
+      color: white;
+    }
+    .img-fluid {
+      width: 100%;
+      height: auto;
+    }
+  </style>
 </head>
-<body>
-  <header>
-    <h1>GallerME</h1>
-    <nav>
-      <ul>
-        <li><a href="/" class="active">Home</a></li>
-        <li><a href="/bio">About</a></li>
-        <li><a href="/blog">Blog</a></li>
-        <li><a href="/contact">Contact</a></li>
-        <li><a href="/photos">Photos</a></li>
-      </ul>
-    </nav>
-  </header>
-  <main></main>
+<body class="d-flex h-100">
+  <div class="container-fluid h-100">
+    <div class="row h-100">
+      <div class="col-10">
+        <h1>Contact Me</h1>
+        <form>
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name" readonly>
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email"  readonly>
+          <label for="phone">Phone:</label>
+          <input type="tel" id="phone" name="phone" readonly>
+          <label for="message">Message:</label>
+          <textarea id="message" name="message"></textarea>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+      <div class="col-2 d-flex flex-column justify-content-between" style="background-color: black;">
+        <div>
+          <h1 class="text-white text-right">GallerME</h1>
+          <nav class="nav flex-column align-items-end">
+            <a href="/" class="nav-link">Home</a>
+            <a href="/about" class="nav-link">About</a>
+            <a href="/blog" class="nav-link">Blog</a>
+            <a href="/contact" class="nav-link  home active">Contact</a>
+            <a href="/photos" class="nav-link">Photos</a>
+          </nav>
+        </div>
+        <div class="social-icons d-flex justify-content-around mt-3">
+          <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+          <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

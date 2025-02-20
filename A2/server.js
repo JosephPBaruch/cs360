@@ -11,23 +11,23 @@ app.get('/', (req, res) => {
 });
 
 // Serve the about.html file
-app.get('/bio', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'bio.html'));
+app.get('/about', (req, res) => {
+  res.sendFile(path.join(__dirname, 'about.html'));
 });
 
 // Serve the portfolio.html file
 app.get('/blog', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'blog.html'));
+  res.sendFile(path.join(__dirname, 'blog.html'));
 });
 
 // Serve the contact.html file
 app.get('/contact', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'contact.html'));
+  res.sendFile(path.join(__dirname, 'contact.html'));
 });
 
 // Serve the signin.html file
 app.get('/photos', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'photos.html'));
+  res.sendFile(path.join(__dirname, 'photos.html'));
 });
 
 app.listen(PORT, () => {
