@@ -31,15 +31,23 @@
       <div class="col-10">
         <h1>Contact Me</h1>
         <form>
-          <label for="name">Name:</label>
-          <input type="text" id="name" name="name" readonly>
-          <label for="email">Email:</label>
-          <input type="email" id="email" name="email"  readonly>
-          <label for="phone">Phone:</label>
-          <input type="tel" id="phone" name="phone" readonly>
-          <label for="message">Message:</label>
-          <textarea id="message" name="message"></textarea>
-          <button type="submit">Submit</button>
+          <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" id="name" name="name" readonly>
+          </div>
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" class="form-control" id="email" name="email" readonly>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone:</label>
+            <input type="tel" class="form-control" id="phone" name="phone" readonly>
+          </div>
+          <div class="form-group">
+            <label for="message">Message:</label>
+            <textarea class="form-control" id="message" name="message" rows="3"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
         </form>
       </div>
       <div class="col-2 d-flex flex-column justify-content-between" style="background-color: black;">
