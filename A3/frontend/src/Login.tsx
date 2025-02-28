@@ -47,6 +47,7 @@ function Login() {
           // Store the access token securely
           localStorage.setItem('access_token', data.access);
           console.log('User logged in!');
+          navigate("/home")
         }
       });
   };

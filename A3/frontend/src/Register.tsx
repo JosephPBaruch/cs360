@@ -44,7 +44,7 @@ function Register() {
     }).then((response) => {
       if (response.ok) {
         console.log('User created!');
-        navigate("/login")
+        navigate("/")
       }
     });
   };
