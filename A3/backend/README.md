@@ -14,3 +14,5 @@ pip freeze > requirements.txt
 
 
     python manage.py runserver 8080
+
+    source env/bin/activate
