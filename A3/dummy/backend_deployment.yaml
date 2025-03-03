@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kvis-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kvis-backend
+  template:
+    metadata:
+      labels:
+        app: kvis-backend
+    spec:
+      containers:
+      - name: kvis-backend
+        image: k3d-local-registry:5001/kvis-backend:latest
+        ports:
+        - containerPort: 8082
+        env:
+        - name: BACKEND_PORT
+          value: "8082"
+        volumeMounts:
+        - mountPath: "/usr/share/nginx/html"
+          name: dummy-storage
+      volumes:
+      - name: dummy-storage
+        persistentVolumeClaim:
+          claimName: dummy-pvc
