@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kvis-client
+  name: client
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: kvis-client
+      app: client
   template:
     metadata:
       labels:
-        app: kvis-client
+        app: client
     spec:
       containers:
-      - name: kvis-client
-        image: k3d-local-registry:5001/kvis-client:latest
+      - name: client
+        image: localhost:5000/client:latest
         ports:
-        - containerPort: 8083
+        - containerPort: 8084
