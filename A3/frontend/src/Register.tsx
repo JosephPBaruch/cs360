@@ -35,7 +35,7 @@ function Register() {
 
   const onClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    fetch('http://127.0.0.1:8080/register/', {
+    fetch('https://joestack.org/backend/register/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
