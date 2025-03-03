@@ -19,6 +19,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: kvis-backend
+            name: backend
             port:
               number: 8082
