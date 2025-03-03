@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: A3Ingress
+  name: a3Ingress
   annotations:
     ingress.kubernetes.io/ssl-redirect: "false"
 spec:
