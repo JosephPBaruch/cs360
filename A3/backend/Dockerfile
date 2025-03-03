@@ -8,13 +8,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-
-# Ensure the root directory is writable by myuser
-RUN chown -R myuser:myuser /backend
+# Create the database file and ensure it is writable by myuser
+RUN mkdir -p /backend/db && touch /backend/db/db.sqlite3 && chown myuser:myuser /backend/db/db.sqlite3
 
 RUN useradd -m myuser
 USER myuser
-
 
 EXPOSE 8082
 
