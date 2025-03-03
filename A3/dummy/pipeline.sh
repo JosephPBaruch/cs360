@@ -76,9 +76,9 @@ run() {
 
     # Apply Kubernetes manifests
     kubectl apply -f ingress.yaml
-    kubectl apply -f server_manifests/client_deployment.yaml
+    kubectl apply -f client_deployment.yaml
     kubectl apply -f client_service.yaml
-    kubectl apply -f server_manifests/backend_deployment.yaml
+    kubectl apply -f backend_deployment.yaml
     kubectl apply -f backend_service.yaml
 
 }
