@@ -5,9 +5,13 @@ import Home from './Home'
 import ProtectedRoute from './ProtectedRoute';
 import './App.css';
 
+const basename = '/frontend'; // Set the basename to match the subpath in Ingress
+
 function App() {
   return (
-    <Router>
+    <Router
+    basename={basename}
+    >
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
