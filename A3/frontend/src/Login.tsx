@@ -43,9 +43,10 @@ function Login() {
       body: JSON.stringify({ email, password }),
     }).then((response) => response.json())
       .then((data) => {
-        if (data.access) {
-          // Store the access token securely
+        if (data.access && data.refresh) {
+          // Store the access and refresh tokens securely
           localStorage.setItem('access_token', data.access);
+          localStorage.setItem('refresh_token', data.refresh);
           console.log('User logged in!');
           navigate("/home")
         }

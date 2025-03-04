@@ -83,8 +83,20 @@ function Home() {
   };
 
   const logout = () => {
-    localStorage.removeItem('access_token');
-    navigate('/login');
+    const refreshToken = localStorage.getItem('refresh_token');
+    if (refreshToken) {
+      fetch('https://joestack.org/backend/logout/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ refresh: refreshToken }),
+      }).then(() => {
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
+        navigate('/login');
+      });
+    }
   };
 
   return (

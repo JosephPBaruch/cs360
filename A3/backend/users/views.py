@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.models import User
 from .serializers import LoginSerializer, RegisterSerializer
+from rest_framework.views import APIView
 
 logger = logging.getLogger(__name__)
 
@@ -25,5 +26,16 @@ class LoginView(generics.GenericAPIView):
             'refresh': str(refresh),
             'access': str(refresh.access_token),
         })
-    
-# TODO: Logout view and logic
+
+class LogoutView(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request, *args, **kwargs):
+        try:
+            refresh_token = request.data["refresh"]
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+            return Response(status=204)
+        except Exception as e:
+            logger.error(f"Logout failed: {e}")
+            return Response(status=400)
