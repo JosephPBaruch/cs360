@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-3miyhchdz826q=yhtudnvzvcc25mu7-^yv8w^n*i8wm+8g09ol
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['joestack.org', '192.168.254.45', "127.0.0.1"]
+ALLOWED_HOSTS = ['joestack.org', '192.168.254.45', "127.0.0.1", "localhost"]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -48,6 +48,8 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ),
 }
+
+AUTH_USER_MODEL = 'users.User'
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -134,6 +136,6 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8084", 
+    "http://localhost:8085", 
     "https://joestack.org",
 ]

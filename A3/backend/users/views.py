@@ -25,7 +25,6 @@ class RegisterView(generics.CreateAPIView):
             logger.error(f"Registration failed: {serializer.errors}")
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
 class LoginView(generics.GenericAPIView):
     permission_classes = (permissions.AllowAny,)
     serializer_class = LoginSerializer
@@ -58,11 +57,7 @@ class AddedUserListView(generics.ListAPIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get_queryset(self):
-        user = self.request.user
-        if isinstance(user, User):  # Ensure it's a valid User instance
-            return AddedUser.objects.filter(user=user)
-        return AddedUser.objects.none()  # Return an empty queryset if invalid
-
+        return AddedUser.objects.filter(user=self.request.user)
 
 class AddedUserCreateView(generics.CreateAPIView):
     serializer_class = AddedUserSerializer

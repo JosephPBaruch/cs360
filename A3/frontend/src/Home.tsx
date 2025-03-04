@@ -59,7 +59,7 @@ function Home() {
   const [addedUsers, setAddedUsers] = useState<AddedUser[]>([]);
 
   useEffect(() => {
-    fetch('https://joestack.org/backend/added-users/', {
+    fetch('http://127.0.0.1:8080/backend/added-users/', {
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('access_token')}`
       }
@@ -70,7 +70,7 @@ function Home() {
 
   const createUser = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    fetch('https://joestack.org/backend/added-users/create/', {
+    fetch('http://127.0.0.1:8080/backend/added-users/create/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -82,7 +82,7 @@ function Home() {
   };
 
   const deleteUser = (id: number) => {
-    // fetch(`https://joestack.org/backend/added-users/${id}/`, {
+    // fetch(`http://127.0.0.1:8080/backend/added-users/${id}/`, {
     //   method: 'DELETE',
     //   headers: {
     //     'Authorization': `Bearer ${localStorage.getItem('access_token')}`
@@ -96,7 +96,7 @@ function Home() {
   const logout = () => {
     const refreshToken = localStorage.getItem('refresh_token');
     if (refreshToken) {
-      fetch('https://joestack.org/backend/logout/', {
+      fetch('http://127.0.0.1:8080/backend/logout/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
