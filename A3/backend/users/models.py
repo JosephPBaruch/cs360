@@ -4,9 +4,9 @@ from django.db import models
 class User(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     username = models.CharField(max_length=255, unique=True, blank=True)
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
-    email = models.EmailField(max_length=255, unique=True)
+    first_name = models.CharField(max_length=255, unique=True, blank=True)
+    last_name = models.CharField(max_length=255, unique=True, blank=True)
+    email = models.EmailField(max_length=255, unique=True, blank=True)
     password = models.CharField(max_length=255)
 
     def save(self, *args, **kwargs):
@@ -21,9 +21,9 @@ class AddedUser(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='added_users')
     username = models.CharField(max_length=255, unique=True, blank=True)
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
-    email = models.EmailField(max_length=255, unique=True)
+    first_name = models.CharField(max_length=255, unique=True, blank=True)
+    last_name = models.CharField(max_length=255, unique=True, blank=True)
+    email = models.EmailField(max_length=255, unique=True, blank=True)
     password = models.CharField(max_length=255)
 
     def __str__(self):

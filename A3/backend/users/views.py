@@ -3,8 +3,9 @@ from rest_framework import generics, permissions
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import get_user_model
-from .serializers import LoginSerializer, RegisterSerializer
+from .serializers import LoginSerializer, RegisterSerializer, AddedUserSerializer
 from rest_framework.views import APIView
+from .models import AddedUser
 
 logger = logging.getLogger(__name__)
 
@@ -41,3 +42,10 @@ class LogoutView(APIView):
         except Exception as e:
             logger.error(f"Logout failed: {e}")
             return Response(status=400)
+
+class AddedUserListView(generics.ListAPIView):
+    serializer_class = AddedUserSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get_queryset(self):
+        return AddedUser.objects.filter(user=self.request.user)
