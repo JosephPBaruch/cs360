@@ -1,0 +1,24 @@
+nohup: ignoring input
+2025-03-03T23:33:47Z INF Starting tunnel tunnelID=20966298-3873-473f-90cc-fc588aa6fd1e
+2025-03-03T23:33:47Z INF Version 2025.2.0 (Checksum 0807b11bc190f06ad071e47c09af8832efc9c5201c866e4d6d9fa77bb8d84ab7)
+2025-03-03T23:33:47Z INF GOOS: linux, GOVersion: go1.22.10, GoArch: amd64
+2025-03-03T23:33:47Z INF Settings: map[cred-file:/home/jbaruch/.cloudflared/20966298-3873-473f-90cc-fc588aa6fd1e.json credentials-file:/home/jbaruch/.cloudflared/20966298-3873-473f-90cc-fc588aa6fd1e.json]
+2025-03-03T23:33:47Z INF Generated Connector ID: c85a23d1-693c-4355-88f6-cfb41ac5ae42
+2025-03-03T23:33:47Z INF cloudflared will not automatically update if installed by a package manager.
+2025-03-03T23:33:47Z INF Initial protocol quic
+2025-03-03T23:33:47Z INF ICMP proxy will use 192.168.254.45 as source for IPv4
+2025-03-03T23:33:47Z INF ICMP proxy will use fe80::46a3:bbff:fe43:42c0 in zone wlo1 as source for IPv6
+2025-03-03T23:33:47Z WRN The user running cloudflared process has a GID (group ID) that is not within ping_group_range. You might need to add that user to a group within that range, or instead update the range to encompass a group the user is already in by modifying /proc/sys/net/ipv4/ping_group_range. Otherwise cloudflared will not be able to ping this network error="Group ID 1000 is not between ping group 1 to 0"
+2025-03-03T23:33:47Z WRN ICMP proxy feature is disabled error="cannot create ICMPv4 proxy: Group ID 1000 is not between ping group 1 to 0 nor ICMPv6 proxy: socket: permission denied"
+2025-03-03T23:33:47Z INF ICMP proxy will use 192.168.254.45 as source for IPv4
+2025-03-03T23:33:47Z INF ICMP proxy will use fe80::46a3:bbff:fe43:42c0 in zone wlo1 as source for IPv6
+2025-03-03T23:33:47Z INF Starting metrics server on 127.0.0.1:20241/metrics
+2025-03-03T23:33:47Z INF Using [CurveID(4588) CurveID(25497) CurveP256] as curve preferences connIndex=0 event=0 ip=198.41.192.27
+2025/03/03 23:33:47 failed to sufficiently increase receive buffer size (was: 208 kiB, wanted: 7168 kiB, got: 416 kiB). See https://github.com/quic-go/quic-go/wiki/UDP-Buffer-Sizes for details.
+2025-03-03T23:33:47Z INF Registered tunnel connection connIndex=0 connection=6d6a49a8-dfb7-457c-a4f5-55cb2ccb7827 event=0 ip=198.41.192.27 location=sea01 protocol=quic
+2025-03-03T23:33:47Z INF Using [CurveID(4588) CurveID(25497) CurveP256] as curve preferences connIndex=1 event=0 ip=198.41.200.23
+2025-03-03T23:33:47Z INF Registered tunnel connection connIndex=1 connection=1e0242d6-8755-47b8-97f6-fd2d4cb6b8c5 event=0 ip=198.41.200.23 location=sea08 protocol=quic
+2025-03-03T23:33:48Z INF Using [CurveID(4588) CurveID(25497) CurveP256] as curve preferences connIndex=2 event=0 ip=198.41.192.37
+2025-03-03T23:33:48Z INF Registered tunnel connection connIndex=2 connection=93556a86-51fc-4ea1-81c3-e69784c8f4ca event=0 ip=198.41.192.37 location=sea05 protocol=quic
+2025-03-03T23:33:49Z INF Using [CurveID(4588) CurveID(25497) CurveP256] as curve preferences connIndex=3 event=0 ip=198.41.200.63
+2025-03-03T23:33:49Z INF Registered tunnel connection connIndex=3 connection=a9f90c1c-278e-424b-8071-b4ed9e3a8deb event=0 ip=198.41.200.63 location=sea07 protocol=quic
