@@ -12,6 +12,9 @@ logger = logging.getLogger(__name__)
 User = get_user_model()
 
 class RegisterView(generics.CreateAPIView):
+    permission_classes = (permissions.AllowAny,)
+    serializer_class = RegisterSerializer
+
     def post(self, request, *args, **kwargs):
         serializer = RegisterSerializer(data=request.data)
         if serializer.is_valid():
@@ -19,8 +22,9 @@ class RegisterView(generics.CreateAPIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             # Log the validation errors
-            print(serializer.errors)
+            logger.error(f"Registration failed: {serializer.errors}")
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class LoginView(generics.GenericAPIView):
     permission_classes = (permissions.AllowAny,)
