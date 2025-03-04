@@ -68,17 +68,27 @@ function Home() {
       .then(data => setAddedUsers(data));
   }, []);
 
-  const createUser = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const createUser = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    fetch('http://127.0.0.1:8080/backend/added-users/create/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('access_token')}`
-      },
-      body: JSON.stringify({ username, first_name, last_name, email, password }),
-    }).then(response => response.json())
-      .then(newUser => setAddedUsers([...addedUsers, newUser]));
+    try {
+      const response = await fetch('http://127.0.0.1:8080/backend/added-users/create/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+        },
+        body: JSON.stringify({ username, first_name, last_name, email, password }),
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+  
+      const newUser = await response.json();
+      setAddedUsers([...addedUsers, newUser]);
+    } catch (error) {
+      console.error('Error creating user:', error);
+    }
   };
 
   const deleteUser = (id: number) => {
