@@ -70,7 +70,7 @@ function Home() {
 
   const createUser = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    fetch('https://joestack.org/backend/added-users/', {
+    fetch('https://joestack.org/backend/added-users/create/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
