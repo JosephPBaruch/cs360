@@ -39,7 +39,7 @@ const useStyles = makeStyles({
   },
 });
 
-interface User {
+interface AddedUser {
   id: number;
   username: string;
   first_name: string;
@@ -52,35 +52,43 @@ function Home() {
   const classes = useStyles();
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
-  const [first_name, setfirst_name] = useState('');
-  const [last_name, setlast_name] = useState('');
+  const [first_name, setFirstName] = useState('');
+  const [last_name, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [users, setUsers] = useState<User[]>([]);
+  const [addedUsers, setAddedUsers] = useState<AddedUser[]>([]);
 
   useEffect(() => {
-    fetch('https://joestack.org/backend/users/')
+    fetch('https://joestack.org/backend/added-users/', {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+      }
+    })
       .then(response => response.json())
-      .then(data => setUsers(data));
+      .then(data => setAddedUsers(data));
   }, []);
 
   const createUser = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    fetch('https://joestack.org/backend/users/', {
+    fetch('https://joestack.org/backend/added-users/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('access_token')}`
       },
       body: JSON.stringify({ username, first_name, last_name, email, password }),
     }).then(response => response.json())
-      .then(newUser => setUsers([...users, newUser]));
+      .then(newUser => setAddedUsers([...addedUsers, newUser]));
   };
 
   const deleteUser = (id: number) => {
-    fetch(`https://joestack.org/backend/users/${id}/`, {
+    fetch(`https://joestack.org/backend/added-users/${id}/`, {
       method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+      }
     }).then(() => {
-      setUsers(users.filter(user => user.id !== id));
+      setAddedUsers(addedUsers.filter(user => user.id !== id));
     });
   };
 
@@ -124,7 +132,7 @@ function Home() {
             label="First Name"
             variant="outlined"
             value={first_name}
-            onChange={(e) => setfirst_name(e.target.value)}
+            onChange={(e) => setFirstName(e.target.value)}
             required
             fullWidth
           />
@@ -132,7 +140,7 @@ function Home() {
             label="Last Name"
             variant="outlined"
             value={last_name}
-            onChange={(e) => setlast_name(e.target.value)}
+            onChange={(e) => setLastName(e.target.value)}
             required
             fullWidth
           />
@@ -170,7 +178,7 @@ function Home() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {users.map(user => (
+            {addedUsers.map(user => (
               <TableRow key={user.id}>
                 <TableCell>{user.username}</TableCell>
                 <TableCell>{user.first_name}</TableCell>
