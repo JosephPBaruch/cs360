@@ -65,3 +65,10 @@ class AddedUserCreateView(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+class AddedUserDeleteView(generics.DestroyAPIView):
+    serializer_class = AddedUserSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get_queryset(self):
+        return AddedUser.objects.filter(user=self.request.user)
