@@ -42,8 +42,8 @@ const useStyles = makeStyles({
 interface User {
   id: number;
   username: string;
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   email: string;
   password: string;
 }
@@ -52,8 +52,8 @@ function Home() {
   const classes = useStyles();
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+  const [first_name, setfirst_name] = useState('');
+  const [last_name, setlast_name] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [users, setUsers] = useState<User[]>([]);
@@ -71,7 +71,7 @@ function Home() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ username, firstName, lastName, email, password }),
+      body: JSON.stringify({ username, first_name, last_name, email, password }),
     }).then(response => response.json())
       .then(newUser => setUsers([...users, newUser]));
   };
@@ -123,16 +123,16 @@ function Home() {
           <TextField
             label="First Name"
             variant="outlined"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
+            value={first_name}
+            onChange={(e) => setfirst_name(e.target.value)}
             required
             fullWidth
           />
           <TextField
             label="Last Name"
             variant="outlined"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
+            value={last_name}
+            onChange={(e) => setlast_name(e.target.value)}
             required
             fullWidth
           />
@@ -173,8 +173,8 @@ function Home() {
             {users.map(user => (
               <TableRow key={user.id}>
                 <TableCell>{user.username}</TableCell>
-                <TableCell>{user.firstName}</TableCell>
-                <TableCell>{user.lastName}</TableCell>
+                <TableCell>{user.first_name}</TableCell>
+                <TableCell>{user.last_name}</TableCell>
                 <TableCell>{user.email}</TableCell>
                 <TableCell>{user.password}</TableCell>
                 <TableCell>

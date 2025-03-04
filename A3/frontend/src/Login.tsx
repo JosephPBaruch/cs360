@@ -31,7 +31,6 @@ function Login() {
   const classes = useStyles();
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const onClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -67,14 +66,6 @@ function Login() {
           variant="outlined"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          required
-          fullWidth
-        />
-        <TextField
-          label="Email"
-          variant="outlined"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
           required
           fullWidth
         />
