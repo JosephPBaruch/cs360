@@ -30,7 +30,7 @@ const useStyles = makeStyles({
 function Login() {
   const classes = useStyles();
   const navigate = useNavigate();
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const onClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -40,7 +40,7 @@ function Login() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ email, password }),
     }).then((response) => response.json())
       .then((data) => {
         if (data.access) {
@@ -61,10 +61,10 @@ function Login() {
       <Typography variant="h4" className={classes.title}>Login</Typography>
       <form className={classes.form}>
         <TextField
-          label="Username"
+          label="Email"
           variant="outlined"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           required
           fullWidth
         />

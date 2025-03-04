@@ -1,9 +1,11 @@
-import { Container, Typography } from '@mui/material';
+import { useState, useEffect } from 'react';
+import { Container, Typography, TextField, Button, Table, TableBody, TableCell, TableHead, TableRow, IconButton } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+import { Delete } from '@mui/icons-material';
 
 const useStyles = makeStyles({
   container: {
-    maxWidth: '500px',
+    maxWidth: '800px',
     margin: 'auto',
     padding: '2rem',
     backgroundColor: '#f5f5f5',
@@ -15,19 +17,130 @@ const useStyles = makeStyles({
     marginBottom: '1.5rem',
     color: '#3f51b5', // Primary color
   },
-  subtitle: {
-    textAlign: 'center',
-    color: '#f50057', // Secondary color
+  form: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '1rem',
+    marginBottom: '2rem',
+  },
+  button: {
+    marginTop: '1rem',
+  },
+  table: {
+    marginTop: '2rem',
   },
 });
 
+interface User {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+}
+
 function Home() {
   const classes = useStyles();
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [users, setUsers] = useState<User[]>([]);
+
+  useEffect(() => {
+    fetch('https://joestack.org/backend/users/')
+      .then(response => response.json())
+      .then(data => setUsers(data));
+  }, []);
+
+  const createUser = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    fetch('https://joestack.org/backend/users/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ firstName, lastName, email, password }),
+    }).then(response => response.json())
+      .then(newUser => setUsers([...users, newUser]));
+  };
+
+  const deleteUser = (id: number) => {
+    fetch(`https://joestack.org/backend/users/${id}/`, {
+      method: 'DELETE',
+    }).then(() => {
+      setUsers(users.filter(user => user.id !== id));
+    });
+  };
 
   return (
     <Container className={classes.container}>
-      <Typography variant="h4" className={classes.title}>Home</Typography>
-      <Typography variant="h6" className={classes.subtitle}>You're signed in!</Typography>
+      <Typography variant="h4" className={classes.title}>User Management</Typography>
+      <form className={classes.form}>
+        <TextField
+          label="First Name"
+          variant="outlined"
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+          required
+          fullWidth
+        />
+        <TextField
+          label="Last Name"
+          variant="outlined"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+          required
+          fullWidth
+        />
+        <TextField
+          label="Email"
+          type="email"
+          variant="outlined"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          fullWidth
+        />
+        <TextField
+          label="Password"
+          type="password"
+          variant="outlined"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          fullWidth
+        />
+        <Button onClick={createUser} type="submit" variant="contained" color="primary" className={classes.button}>
+          Create User
+        </Button>
+      </form>
+      <Table className={classes.table}>
+        <TableHead>
+          <TableRow>
+            <TableCell>First Name</TableCell>
+            <TableCell>Last Name</TableCell>
+            <TableCell>Email</TableCell>
+            <TableCell>Password</TableCell>
+            <TableCell>Actions</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {users.map(user => (
+            <TableRow key={user.id}>
+              <TableCell>{user.firstName}</TableCell>
+              <TableCell>{user.lastName}</TableCell>
+              <TableCell>{user.email}</TableCell>
+              <TableCell>{user.password}</TableCell>
+              <TableCell>
+                <IconButton onClick={() => deleteUser(user.id)} color="secondary">
+                  <Delete />
+                </IconButton>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
     </Container>
   );
 }

@@ -30,7 +30,9 @@ const useStyles = makeStyles({
 function Register() {
   const classes = useStyles();
   const navigate = useNavigate();
-  const [username, setUsername] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const onClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -40,7 +42,7 @@ function Register() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ firstName, lastName, email, password }),
     }).then((response) => {
       if (response.ok) {
         console.log('User created!');
@@ -54,10 +56,27 @@ function Register() {
       <Typography variant="h4" className={classes.title}>Register</Typography>
       <form className={classes.form}>
         <TextField
-          label="Username"
+          label="First Name"
           variant="outlined"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+          required
+          fullWidth
+        />
+        <TextField
+          label="Last Name"
+          variant="outlined"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+          required
+          fullWidth
+        />
+        <TextField
+          label="Email"
+          type="email"
+          variant="outlined"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           required
           fullWidth
         />
