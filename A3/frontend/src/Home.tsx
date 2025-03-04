@@ -82,14 +82,15 @@ function Home() {
   };
 
   const deleteUser = (id: number) => {
-    fetch(`https://joestack.org/backend/added-users/${id}/`, {
-      method: 'DELETE',
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('access_token')}`
-      }
-    }).then(() => {
-      setAddedUsers(addedUsers.filter(user => user.id !== id));
-    });
+    // fetch(`https://joestack.org/backend/added-users/${id}/`, {
+    //   method: 'DELETE',
+    //   headers: {
+    //     'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+    //   }
+    // }).then(() => {
+    //   setAddedUsers(addedUsers.filter(user => user.id !== id));
+    // });
+    console.log(id)
   };
 
   const logout = () => {
@@ -99,12 +100,13 @@ function Home() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('access_token')}`
         },
         body: JSON.stringify({ refresh: refreshToken }),
       }).then(() => {
         localStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
-        navigate('/login');
+        navigate('/');
       });
     }
   };
