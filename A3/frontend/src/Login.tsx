@@ -30,6 +30,7 @@ const useStyles = makeStyles({
 function Login() {
   const classes = useStyles();
   const navigate = useNavigate();
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -40,7 +41,7 @@ function Login() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ username, password }),
     }).then((response) => response.json())
       .then((data) => {
         if (data.access && data.refresh) {
@@ -61,6 +62,14 @@ function Login() {
     <Container className={classes.container}>
       <Typography variant="h4" className={classes.title}>Login</Typography>
       <form className={classes.form}>
+        <TextField
+          label="Username"
+          variant="outlined"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+          fullWidth
+        />
         <TextField
           label="Email"
           variant="outlined"

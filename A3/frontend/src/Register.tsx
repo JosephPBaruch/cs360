@@ -30,6 +30,7 @@ const useStyles = makeStyles({
 function Register() {
   const classes = useStyles();
   const navigate = useNavigate();
+  const [username, setUsername] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -42,7 +43,7 @@ function Register() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ firstName, lastName, email, password }),
+      body: JSON.stringify({ username, firstName, lastName, email, password }),
     }).then((response) => {
       if (response.ok) {
         console.log('User created!');
@@ -55,6 +56,14 @@ function Register() {
     <Container className={classes.container}>
       <Typography variant="h4" className={classes.title}>Register</Typography>
       <form className={classes.form}>
+        <TextField
+          label="Username"
+          variant="outlined"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+          fullWidth
+        />
         <TextField
           label="First Name"
           variant="outlined"

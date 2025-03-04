@@ -41,6 +41,7 @@ const useStyles = makeStyles({
 
 interface User {
   id: number;
+  username: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -50,6 +51,7 @@ interface User {
 function Home() {
   const classes = useStyles();
   const navigate = useNavigate();
+  const [username, setUsername] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -69,7 +71,7 @@ function Home() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ firstName, lastName, email, password }),
+      body: JSON.stringify({ username, firstName, lastName, email, password }),
     }).then(response => response.json())
       .then(newUser => setUsers([...users, newUser]));
   };
@@ -111,6 +113,14 @@ function Home() {
         <Typography variant="h4" className={classes.title}>User Management</Typography>
         <form className={classes.form}>
           <TextField
+            label="Username"
+            variant="outlined"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+            fullWidth
+          />
+          <TextField
             label="First Name"
             variant="outlined"
             value={firstName}
@@ -151,6 +161,7 @@ function Home() {
         <Table className={classes.table}>
           <TableHead>
             <TableRow>
+              <TableCell>Username</TableCell>
               <TableCell>First Name</TableCell>
               <TableCell>Last Name</TableCell>
               <TableCell>Email</TableCell>
@@ -161,6 +172,7 @@ function Home() {
           <TableBody>
             {users.map(user => (
               <TableRow key={user.id}>
+                <TableCell>{user.username}</TableCell>
                 <TableCell>{user.firstName}</TableCell>
                 <TableCell>{user.lastName}</TableCell>
                 <TableCell>{user.email}</TableCell>
