@@ -58,7 +58,11 @@ class AddedUserListView(generics.ListAPIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get_queryset(self):
-        return AddedUser.objects.filter(user=self.request.user)
+        user = self.request.user
+        if isinstance(user, User):  # Ensure it's a valid User instance
+            return AddedUser.objects.filter(user=user)
+        return AddedUser.objects.none()  # Return an empty queryset if invalid
+
 
 class AddedUserCreateView(generics.CreateAPIView):
     serializer_class = AddedUserSerializer
