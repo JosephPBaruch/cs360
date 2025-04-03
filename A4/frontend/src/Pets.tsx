@@ -42,6 +42,7 @@ function Display() {
   const [data, setData] = useState<Pet[]>([]);
   const [open, setOpen] = useState(false);
   const [newPet, setNewPet] = useState<Partial<Pet>>({});
+  const [editPet, setEditPet] = useState<Partial<Pet> | null>(null);
 
   useEffect(() => {
     fetch('http://127.0.0.1:8081/backend/pets/') // Replace with your API endpoint
@@ -51,8 +52,30 @@ function Display() {
   }, []);
 
   const handleEdit = (id: number) => {
-    // Logic to edit an item
-    console.log('Edit item with id:', id);
+    const petToEdit = data.find((pet) => pet.PetID === id);
+    if (petToEdit) {
+      setEditPet(petToEdit);
+      setOpen(true);
+    }
+  };
+
+  const handleUpdate = () => {
+    if (editPet) {
+      fetch(`http://127.0.0.1:8081/backend/pets/${editPet.PetID}/update/`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(editPet),
+      })
+        .then((response) => response.json())
+        .then((updatedPet) => {
+          setData((prevData) =>
+            prevData.map((pet) => (pet.PetID === updatedPet.PetID ? updatedPet : pet))
+          );
+          setOpen(false);
+          setEditPet(null);
+        })
+        .catch((error) => console.error('Error updating item:', error));
+    }
   };
 
   const handleDelete = (id: number, endpoint: string) => {
@@ -82,7 +105,11 @@ function Display() {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setNewPet((prev) => ({ ...prev, [name]: value }));
+    if (editPet) {
+      setEditPet((prev) => ({ ...prev, [name]: value }));
+    } else {
+      setNewPet((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   return (
@@ -92,19 +119,71 @@ function Display() {
         Create
       </Button>
       <Dialog open={open} onClose={() => setOpen(false)}>
-        <DialogTitle>Create New Pet</DialogTitle>
+        <DialogTitle>{editPet ? 'Edit Pet' : 'Create New Pet'}</DialogTitle>
         <DialogContent>
-          <TextField name="Name" label="Name" fullWidth margin="dense" onChange={handleInputChange} />
-          <TextField name="Age" label="Age" type="number" fullWidth margin="dense" onChange={handleInputChange} />
-          <TextField name="Street" label="Street" fullWidth margin="dense" onChange={handleInputChange} />
-          <TextField name="City" label="City" fullWidth margin="dense" onChange={handleInputChange} />
-          <TextField name="ZipCode" label="Zip Code" fullWidth margin="dense" onChange={handleInputChange} />
-          <TextField name="State" label="State" fullWidth margin="dense" onChange={handleInputChange} />
-          <TextField name="TypeofPet" label="Type of Pet" fullWidth margin="dense" onChange={handleInputChange} />
+          <TextField
+            name="Name"
+            label="Name"
+            fullWidth
+            margin="dense"
+            value={editPet?.Name || newPet.Name || ''}
+            onChange={handleInputChange}
+          />
+          <TextField
+            name="Age"
+            label="Age"
+            type="number"
+            fullWidth
+            margin="dense"
+            value={editPet?.Age || newPet.Age || ''}
+            onChange={handleInputChange}
+          />
+          <TextField
+            name="Street"
+            label="Street"
+            fullWidth
+            margin="dense"
+            value={editPet?.Street || newPet.Street || ''}
+            onChange={handleInputChange}
+          />
+          <TextField
+            name="City"
+            label="City"
+            fullWidth
+            margin="dense"
+            value={editPet?.City || newPet.City || ''}
+            onChange={handleInputChange}
+          />
+          <TextField
+            name="ZipCode"
+            label="Zip Code"
+            fullWidth
+            margin="dense"
+            value={editPet?.ZipCode || newPet.ZipCode || ''}
+            onChange={handleInputChange}
+          />
+          <TextField
+            name="State"
+            label="State"
+            fullWidth
+            margin="dense"
+            value={editPet?.State || newPet.State || ''}
+            onChange={handleInputChange}
+          />
+          <TextField
+            name="TypeofPet"
+            label="Type of Pet"
+            fullWidth
+            margin="dense"
+            value={editPet?.TypeofPet || newPet.TypeofPet || ''}
+            onChange={handleInputChange}
+          />
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setOpen(false)} color="secondary">Cancel</Button>
-          <Button onClick={handleCreate} color="primary">Create</Button>
+          <Button onClick={editPet ? handleUpdate : handleCreate} color="primary">
+            {editPet ? 'Update' : 'Create'}
+          </Button>
         </DialogActions>
       </Dialog>
       <TableContainer component={Paper}>
@@ -134,7 +213,12 @@ function Display() {
                 <TableCell>{item.State}</TableCell>
                 <TableCell>{item.TypeofPet}</TableCell>
                 <TableCell>
-                  <Button onClick={() => handleEdit(item.PetID)} variant="contained" color="primary" size="small">
+                  <Button
+                    onClick={() => handleEdit(item.PetID)}
+                    variant="contained"
+                    color="primary"
+                    size="small"
+                  >
                     Edit
                   </Button>
                   <Button

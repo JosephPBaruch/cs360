@@ -1,4 +1,4 @@
-from rest_framework import generics
+from rest_framework import generics, mixins
 from .models import Pets, Owners, Owns, Likes, Foods, Purchases
 from .serializers import PetsSerializer, OwnersSerializer, OwnsSerializer, LikesSerializer, FoodsSerializer, PurchasesSerializer
 
@@ -49,3 +49,10 @@ class FoodsDeleteView(generics.DestroyAPIView):
 class PurchasesDeleteView(generics.DestroyAPIView):
     queryset = Purchases.objects.all()
     serializer_class = PurchasesSerializer
+
+class PetsUpdateView(mixins.UpdateModelMixin, generics.GenericAPIView):
+    queryset = Pets.objects.all()
+    serializer_class = PetsSerializer
+
+    def patch(self, request, *args, **kwargs):
+        return self.partial_update(request, *args, **kwargs)
