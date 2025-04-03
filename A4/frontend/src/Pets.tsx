@@ -55,8 +55,8 @@ function Display() {
     console.log('Edit item with id:', id);
   };
 
-  const handleDelete = (id: number) => {
-    fetch(`http://127.0.0.1:8081/backend/pets/${id}`, { // Replace with your API endpoint
+  const handleDelete = (id: number, endpoint: string) => {
+    fetch(`http://127.0.0.1:8081/backend/${endpoint}/${id}/`, { // Replace with your API endpoint
       method: 'DELETE',
     })
       .then(() => {
@@ -137,7 +137,13 @@ function Display() {
                   <Button onClick={() => handleEdit(item.PetID)} variant="contained" color="primary" size="small">
                     Edit
                   </Button>
-                  <Button onClick={() => handleDelete(item.PetID)} variant="contained" color="secondary" size="small" style={{ marginLeft: '0.5rem' }}>
+                  <Button
+                    onClick={() => handleDelete(item.PetID, 'pets')}
+                    variant="contained"
+                    color="secondary"
+                    size="small"
+                    style={{ marginLeft: '0.5rem' }}
+                  >
                     Delete
                   </Button>
                 </TableCell>

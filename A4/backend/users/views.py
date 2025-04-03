@@ -25,3 +25,27 @@ class FoodsListView(generics.ListCreateAPIView):
 class PurchasesListView(generics.ListCreateAPIView):
     queryset = Purchases.objects.all()
     serializer_class = PurchasesSerializer
+
+class PetsDeleteView(generics.DestroyAPIView):
+    queryset = Pets.objects.all()
+    serializer_class = PetsSerializer
+
+class OwnersDeleteView(generics.DestroyAPIView):
+    queryset = Owners.objects.all()
+    serializer_class = OwnersSerializer
+
+class OwnsDeleteView(generics.DestroyAPIView):
+    queryset = Owns.objects.all()
+    serializer_class = OwnsSerializer
+
+class LikesDeleteView(generics.DestroyAPIView):
+    queryset = Likes.objects.all()
+    serializer_class = LikesSerializer
+
+class FoodsDeleteView(generics.DestroyAPIView):
+    queryset = Foods.objects.all()
+    serializer_class = FoodsSerializer
+
+class PurchasesDeleteView(generics.DestroyAPIView):
+    queryset = Purchases.objects.all()
+    serializer_class = PurchasesSerializer
