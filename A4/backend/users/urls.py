@@ -2,7 +2,7 @@ from django.urls import path
 from .views import (
     PetsListView, OwnersListView, OwnsListView, LikesListView, FoodsListView, PurchasesListView,
     PetsDeleteView, OwnersDeleteView, OwnsDeleteView, LikesDeleteView, FoodsDeleteView, PurchasesDeleteView,
-    PetsUpdateView
+    PetsUpdateView, OwnersUpdateView, OwnsUpdateView, LikesUpdateView, FoodsUpdateView, PurchasesUpdateView
 )
 
 urlpatterns = [
@@ -19,4 +19,9 @@ urlpatterns = [
     path('foods/<int:pk>/', FoodsDeleteView.as_view(), name='delete-food'),
     path('purchases/<int:pk>/', PurchasesDeleteView.as_view(), name='delete-purchase'),
     path('pets/<int:pk>/update/', PetsUpdateView.as_view(), name='update-pet'),
+    path('owners/<int:pk>/update/', OwnersUpdateView.as_view(), name='update-owner'),
+    path('owns/<int:pk>/update/', OwnsUpdateView.as_view(), name='update-own'),
+    path('likes/<int:pk>/update/', LikesUpdateView.as_view(), name='update-like'),
+    path('foods/<int:pk>/update/', FoodsUpdateView.as_view(), name='update-food'),
+    path('purchases/<int:pk>/update/', PurchasesUpdateView.as_view(), name='update-purchase'),
 ]
