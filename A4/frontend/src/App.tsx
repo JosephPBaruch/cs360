@@ -5,6 +5,7 @@ import Owners from './Owners';
 import Owns from './Owns';
 import Likes from './Likes';
 import Purchases from './Purchases';
+import Foods from './Foods';
 
 const basename = '/frontend'; 
 
@@ -19,6 +20,7 @@ function App() {
           <Link to="/owns">Owns </Link> 
           <Link to="/likes">Likes </Link> 
           <Link to="/purchases">Purchases </Link>
+          <Link to="/foods">Foods </Link>
         </nav>
       </header>
       <Routes>
@@ -27,6 +29,7 @@ function App() {
         <Route path="/owns" element={<Owns />} /> 
         <Route path="/likes" element={<Likes />} /> 
         <Route path="/purchases" element={<Purchases />} /> 
+        <Route path="/foods" element={<Foods />} /> 
       </Routes>
     </Router>
   );
