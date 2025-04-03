@@ -27,11 +27,13 @@ const useStyles = makeStyles({
 });
 
 interface Purchase {
-  PID: number;
-  FoodID: number;
-  OwnerID: number;
+  id: number;
+  Month: number;
+  Year: number;
   Quantity: number;
-  Date: string;
+  OID: number;
+  FoodID: number;
+  PetID: number;
 }
 
 function Purchases() {
@@ -49,7 +51,7 @@ function Purchases() {
   }, []);
 
   const handleEdit = (id: number) => {
-    const purchaseToEdit = data.find((purchase) => purchase.PID === id);
+    const purchaseToEdit = data.find((purchase) => purchase.id === id);
     if (purchaseToEdit) {
       setEditPurchase(purchaseToEdit);
       setOpen(true);
@@ -58,7 +60,7 @@ function Purchases() {
 
   const handleUpdate = () => {
     if (editPurchase) {
-      fetch(`http://127.0.0.1:8081/backend/purchases/${editPurchase.PID}/update/`, {
+      fetch(`http://127.0.0.1:8081/backend/purchases/${editPurchase.id}/update/`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(editPurchase),
@@ -66,7 +68,7 @@ function Purchases() {
         .then((response) => response.json())
         .then((updatedPurchase) => {
           setData((prevData) =>
-            prevData.map((purchase) => (purchase.PID === updatedPurchase.PID ? updatedPurchase : purchase))
+            prevData.map((purchase) => (purchase.id === updatedPurchase.id ? updatedPurchase : purchase))
           );
           setOpen(false);
           setEditPurchase(null);
@@ -80,7 +82,7 @@ function Purchases() {
       method: 'DELETE',
     })
       .then(() => {
-        setData((prevData) => prevData.filter((item) => item.PID !== id));
+        setData((prevData) => prevData.filter((item) => item.id !== id));
       })
       .catch((error) => console.error('Error deleting item:', error));
   };
@@ -103,9 +105,9 @@ function Purchases() {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     if (editPurchase) {
-      setEditPurchase((prev) => ({ ...prev, [name]: value }));
+      setEditPurchase((prev) => ({ ...prev, [name]: name === 'Month' || name === 'Year' || name === 'Quantity' || name === 'OID' || name === 'FoodID' || name === 'PetID' ? parseInt(value) : value }));
     } else {
-      setNewPurchase((prev) => ({ ...prev, [name]: value }));
+      setNewPurchase((prev) => ({ ...prev, [name]: name === 'Month' || name === 'Year' || name === 'Quantity' || name === 'OID' || name === 'FoodID' || name === 'PetID' ? parseInt(value) : value }));
     }
   };
 
@@ -119,21 +121,21 @@ function Purchases() {
         <DialogTitle>{editPurchase ? 'Edit Purchase' : 'Create New Purchase'}</DialogTitle>
         <DialogContent>
           <TextField
-            name="FoodID"
-            label="Food ID"
+            name="Month"
+            label="Month"
             type="number"
             fullWidth
             margin="dense"
-            value={editPurchase?.FoodID || newPurchase.FoodID || ''}
+            value={editPurchase?.Month || newPurchase.Month || ''}
             onChange={handleInputChange}
           />
           <TextField
-            name="OwnerID"
-            label="Owner ID"
+            name="Year"
+            label="Year"
             type="number"
             fullWidth
             margin="dense"
-            value={editPurchase?.OwnerID || newPurchase.OwnerID || ''}
+            value={editPurchase?.Year || newPurchase.Year || ''}
             onChange={handleInputChange}
           />
           <TextField
@@ -146,13 +148,30 @@ function Purchases() {
             onChange={handleInputChange}
           />
           <TextField
-            name="Date"
-            label="Date"
-            type="date"
+            name="OID"
+            label="Owner ID"
+            type="number"
             fullWidth
             margin="dense"
-            InputLabelProps={{ shrink: true }}
-            value={editPurchase?.Date || newPurchase.Date || ''}
+            value={editPurchase?.OID || newPurchase.OID || ''}
+            onChange={handleInputChange}
+          />
+          <TextField
+            name="FoodID"
+            label="Food ID"
+            type="number"
+            fullWidth
+            margin="dense"
+            value={editPurchase?.FoodID || newPurchase.FoodID || ''}
+            onChange={handleInputChange}
+          />
+          <TextField
+            name="PetID"
+            label="Pet ID"
+            type="number"
+            fullWidth
+            margin="dense"
+            value={editPurchase?.PetID || newPurchase.PetID || ''}
             onChange={handleInputChange}
           />
         </DialogContent>
@@ -167,25 +186,29 @@ function Purchases() {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>PID</TableCell>
-              <TableCell>Food ID</TableCell>
-              <TableCell>Owner ID</TableCell>
+              <TableCell>ID</TableCell>
+              <TableCell>Month</TableCell>
+              <TableCell>Year</TableCell>
               <TableCell>Quantity</TableCell>
-              <TableCell>Date</TableCell>
+              <TableCell>Owner ID</TableCell>
+              <TableCell>Food ID</TableCell>
+              <TableCell>Pet ID</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {data.map((item) => (
-              <TableRow key={item.PID}>
-                <TableCell>{item.PID}</TableCell>
-                <TableCell>{item.FoodID}</TableCell>
-                <TableCell>{item.OwnerID}</TableCell>
+              <TableRow key={item.id}>
+                <TableCell>{item.id}</TableCell>
+                <TableCell>{item.Month}</TableCell>
+                <TableCell>{item.Year}</TableCell>
                 <TableCell>{item.Quantity}</TableCell>
-                <TableCell>{item.Date}</TableCell>
+                <TableCell>{item.OID}</TableCell>
+                <TableCell>{item.FoodID}</TableCell>
+                <TableCell>{item.PetID}</TableCell>
                 <TableCell>
                   <Button
-                    onClick={() => handleEdit(item.PID)}
+                    onClick={() => handleEdit(item.id)}
                     variant="contained"
                     color="primary"
                     size="small"
@@ -193,7 +216,7 @@ function Purchases() {
                     Edit
                   </Button>
                   <Button
-                    onClick={() => handleDelete(item.PID)}
+                    onClick={() => handleDelete(item.id)}
                     variant="contained"
                     color="secondary"
                     size="small"

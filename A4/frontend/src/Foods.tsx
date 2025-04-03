@@ -29,8 +29,11 @@ const useStyles = makeStyles({
 interface Food {
   FoodID: number;
   Name: string;
-  Type: string;
+  Brand: string;
+  TypeofFood: string;
   Price: number;
+  ItemWeight: number;
+  ClassofFood: string;
 }
 
 function Foods() {
@@ -127,12 +130,21 @@ function Foods() {
             onChange={handleInputChange}
           />
           <TextField
-            name="Type"
-            label="Type"
+            name="Brand"
+            label="Brand"
             type="text"
             fullWidth
             margin="dense"
-            value={editFood?.Type || newFood.Type || ''}
+            value={editFood?.Brand || newFood.Brand || ''}
+            onChange={handleInputChange}
+          />
+          <TextField
+            name="TypeofFood"
+            label="Type of Food"
+            type="text"
+            fullWidth
+            margin="dense"
+            value={editFood?.TypeofFood || newFood.TypeofFood || ''}
             onChange={handleInputChange}
           />
           <TextField
@@ -142,6 +154,24 @@ function Foods() {
             fullWidth
             margin="dense"
             value={editFood?.Price || newFood.Price || ''}
+            onChange={handleInputChange}
+          />
+          <TextField
+            name="ItemWeight"
+            label="Item Weight"
+            type="number"
+            fullWidth
+            margin="dense"
+            value={editFood?.ItemWeight || newFood.ItemWeight || ''}
+            onChange={handleInputChange}
+          />
+          <TextField
+            name="ClassofFood"
+            label="Class of Food"
+            type="text"
+            fullWidth
+            margin="dense"
+            value={editFood?.ClassofFood || newFood.ClassofFood || ''}
             onChange={handleInputChange}
           />
         </DialogContent>
@@ -158,8 +188,11 @@ function Foods() {
             <TableRow>
               <TableCell>Food ID</TableCell>
               <TableCell>Name</TableCell>
-              <TableCell>Type</TableCell>
+              <TableCell>Brand</TableCell>
+              <TableCell>Type of Food</TableCell>
               <TableCell>Price</TableCell>
+              <TableCell>Item Weight</TableCell>
+              <TableCell>Class of Food</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
@@ -168,8 +201,11 @@ function Foods() {
               <TableRow key={item.FoodID}>
                 <TableCell>{item.FoodID}</TableCell>
                 <TableCell>{item.Name}</TableCell>
-                <TableCell>{item.Type}</TableCell>
+                <TableCell>{item.Brand}</TableCell>
+                <TableCell>{item.TypeofFood}</TableCell>
                 <TableCell>{item.Price}</TableCell>
+                <TableCell>{item.ItemWeight}</TableCell>
+                <TableCell>{item.ClassofFood}</TableCell>
                 <TableCell>
                   <Button
                     onClick={() => handleEdit(item.FoodID)}
