@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@mui/styles';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
 
 const useStyles = makeStyles({
   container: {
@@ -40,6 +40,8 @@ interface Pet {
 function Display() {
   const classes = useStyles();
   const [data, setData] = useState<Pet[]>([]);
+  const [open, setOpen] = useState(false);
+  const [newPet, setNewPet] = useState<Partial<Pet>>({});
 
   useEffect(() => {
     fetch('http://127.0.0.1:8081/backend/pets/') // Replace with your API endpoint
@@ -63,9 +65,48 @@ function Display() {
       .catch((error) => console.error('Error deleting item:', error));
   };
 
+  const handleCreate = () => {
+    fetch('http://127.0.0.1:8081/backend/pets/', { // Replace with your API endpoint
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newPet),
+    })
+      .then((response) => response.json())
+      .then((createdPet) => {
+        setData((prevData) => [...prevData, createdPet]);
+        setOpen(false);
+        setNewPet({});
+      })
+      .catch((error) => console.error('Error creating item:', error));
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setNewPet((prev) => ({ ...prev, [name]: value }));
+  };
+
   return (
     <>
       <h1 className={classes.title}>Pets Table</h1>
+      <Button variant="contained" color="primary" onClick={() => setOpen(true)} className={classes.button}>
+        Create
+      </Button>
+      <Dialog open={open} onClose={() => setOpen(false)}>
+        <DialogTitle>Create New Pet</DialogTitle>
+        <DialogContent>
+          <TextField name="Name" label="Name" fullWidth margin="dense" onChange={handleInputChange} />
+          <TextField name="Age" label="Age" type="number" fullWidth margin="dense" onChange={handleInputChange} />
+          <TextField name="Street" label="Street" fullWidth margin="dense" onChange={handleInputChange} />
+          <TextField name="City" label="City" fullWidth margin="dense" onChange={handleInputChange} />
+          <TextField name="ZipCode" label="Zip Code" fullWidth margin="dense" onChange={handleInputChange} />
+          <TextField name="State" label="State" fullWidth margin="dense" onChange={handleInputChange} />
+          <TextField name="TypeofPet" label="Type of Pet" fullWidth margin="dense" onChange={handleInputChange} />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpen(false)} color="secondary">Cancel</Button>
+          <Button onClick={handleCreate} color="primary">Create</Button>
+        </DialogActions>
+      </Dialog>
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
