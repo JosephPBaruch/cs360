@@ -2,8 +2,9 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Pets from './Pets';
 import './App.css';
 import Owners from './Owners';
+import Owns from './Owns';
 
-const basename = '/frontend'; // Set the basename to match the subpath in Ingress
+const basename = '/frontend'; 
 
 function App() {
   return (
@@ -13,13 +14,13 @@ function App() {
         <nav>
           <Link to="/pets">Pets</Link>
           <Link to="/owners">Owners</Link>
-
+          <Link to="/owns">Owns</Link> 
         </nav>
       </header>
       <Routes>
         <Route path="/pets" element={<Pets />} />
         <Route path="/owners" element={<Owners />} />
-
+        <Route path="/owns" element={<Owns />} /> 
       </Routes>
     </Router>
   );
